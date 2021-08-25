@@ -1,7 +1,6 @@
 import Flutter
 import UIKit
-import FacebookShare
-import FacebookCore
+
 public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate {
     var result: FlutterResult?
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -36,11 +35,7 @@ public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate
                 shareWhatsApp(message: args!["msg"] as! String,imageUrl: args!["url"] as! String,result: result)
             }
         }
-        else if(call.method.elementsEqual("shareFacebook")){
-            let args = call.arguments as? Dictionary<String,Any>
-            sharefacebook(message: args!, result: result)
-            
-        }else if(call.method.elementsEqual("shareTwitter")){
+        else if(call.method.elementsEqual("shareTwitter")){
             let args = call.arguments as? Dictionary<String,Any>
             shareTwitter(message: args!["msg"] as! String, url: args!["url"] as! String, result: result)
         }
@@ -88,7 +83,7 @@ public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate
                         
                         let activityVC = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
                         // we want to exlude most of the things so developer can see whatsapp only on system share sheet
-                        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop,UIActivity.ActivityType.message, UIActivity.ActivityType.mail,UIActivity.ActivityType.postToTwitter,UIActivity.ActivityType.postToWeibo,UIActivity.ActivityType.print,UIActivity.ActivityType.openInIBooks,UIActivity.ActivityType.postToFlickr,UIActivity.ActivityType.postToFacebook,UIActivity.ActivityType.addToReadingList,UIActivity.ActivityType.copyToPasteboard]
+                        activityVC.excludedActivityTypes = [UIActivity.ActivityType.airDrop,UIActivity.ActivityType.message, UIActivity.ActivityType.mail,UIActivity.ActivityType.postToTwitter,UIActivity.ActivityType.postToWeibo,UIActivity.ActivityType.print,UIActivity.ActivityType.openInIBooks,UIActivity.ActivityType.postToFlickr,UIActivity.ActivityType.addToReadingList,UIActivity.ActivityType.copyToPasteboard]
                         
                         if UIDevice.current.userInterfaceIdiom == .pad {
                             if let popup = activityVC.popoverPresentationController {
@@ -156,17 +151,7 @@ func shareWhatsApp4Biz(message:String, result: @escaping FlutterResult)  {
 // params
 // @ map conting meesage and url
 
-func sharefacebook(message:Dictionary<String,Any>, result: @escaping FlutterResult)  {
-    let viewController = UIApplication.shared.delegate?.window??.rootViewController
-    let shareDialog=ShareDialog()
-    let shareContent = ShareLinkContent()
-    shareContent.contentURL = URL.init(string: message["url"] as! String)!
-    shareContent.quote = message["msg"] as? String
-    shareDialog.mode = .automatic
-    ShareDialog(fromViewController: viewController, content: shareContent, delegate: self).show()
-    result("Sucess")
-    
-}
+
 
 
 // share twitter params
@@ -229,19 +214,4 @@ func systemShare(message:String,result: @escaping FlutterResult)  {
 }
 
 
-///Facebook delegate methods
-
-public func sharer(_ sharer: Sharing, didCompleteWithResults results: [String : Any]) {
-    print("Share: Success")
-    
-}
-
-public func sharer(_ sharer: Sharing, didFailWithError error: Error) {
-    print("Share: Fail")
-    
-}
-
-public func sharerDidCancel(_ sharer: Sharing) {
-    print("Share: Cancel")
-}
 }

@@ -6,7 +6,7 @@ import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-enum Share { facebook, twitter, whatsapp, whatsapp_business, share_system }
+enum Share {twitter, whatsapp, whatsapp_business, share_system }
 
 void main() => runApp(MyApp());
 
@@ -44,10 +44,7 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () => onButtonTap(Share.whatsapp_business),
                 child: Text('share to WhatsApp  Business'),
               ),
-              ElevatedButton(
-                onPressed: () => onButtonTap(Share.facebook),
-                child: Text('share to  FaceBook'),
-              ),
+
               ElevatedButton(
                 onPressed: () => onButtonTap(Share.share_system),
                 child: Text('share to System'),
@@ -87,9 +84,6 @@ class _MyAppState extends State<MyApp> {
     String? response;
     FlutterShareMe flutterShareMe = FlutterShareMe();
     switch (share) {
-      case Share.facebook:
-        response = await flutterShareMe.shareToFacebook(url: url, msg: msg);
-        break;
       case Share.twitter:
         response = await flutterShareMe.shareToTwitter(url: url, msg: msg);
         break;

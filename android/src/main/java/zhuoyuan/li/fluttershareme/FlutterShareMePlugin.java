@@ -9,12 +9,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareDialog;
+
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
@@ -77,11 +72,6 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
     public void onMethodCall(MethodCall call, @NonNull Result result) {
         String url, msg;
         switch (call.method) {
-            case "shareFacebook":
-                url = call.argument("url");
-                msg = call.argument("msg");
-                shareToFacebook(url, msg, result);
-                break;
             case "shareTwitter":
                 url = call.argument("url");
                 msg = call.argument("msg");
@@ -147,44 +137,6 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
         }
     }
 
-    /**
-     * share to Facebook
-     *
-     * @param url    String
-     * @param msg    String
-     * @param result Result
-     */
-    private void shareToFacebook(String url, String msg, Result result) {
-
-        ShareDialog shareDialog = new ShareDialog(activity);
-        // this part is optional
-        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-                System.out.println("--------------------success");
-            }
-
-            @Override
-            public void onCancel() {
-                System.out.println("-----------------onCancel");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                System.out.println("---------------onError");
-            }
-        });
-
-        ShareLinkContent content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse(url))
-                .setQuote(msg)
-                .build();
-        if (ShareDialog.canShow(ShareLinkContent.class)) {
-            shareDialog.show(content);
-            result.success("success");
-        }
-
-    }
 
     /**
      * share to whatsapp
