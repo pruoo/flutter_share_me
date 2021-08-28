@@ -1,7 +1,7 @@
 import Flutter
 import UIKit
 
-public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin, SharingDelegate {
+public class SwiftFlutterShareMePlugin: NSObject, FlutterPlugin {
     var result: FlutterResult?
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_share_me", binaryMessenger: registrar.messenger())
