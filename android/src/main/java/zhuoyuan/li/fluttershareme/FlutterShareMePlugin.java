@@ -32,7 +32,6 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, ActivityAware {
 
     private Activity activity;
-    private static CallbackManager callbackManager;
     private MethodChannel methodChannel;
 
     /**
@@ -59,7 +58,6 @@ public class FlutterShareMePlugin implements MethodCallHandler, FlutterPlugin, A
     private void onAttachedToEngine(BinaryMessenger messenger) {
         methodChannel = new MethodChannel(messenger, "flutter_share_me");
         methodChannel.setMethodCallHandler(this);
-        callbackManager = CallbackManager.Factory.create();
     }
 
     /**
